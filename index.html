@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2D5016">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Menu">
+<title>Menu de la semaine</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23F7F4EF%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2224.5%22%20fill%3D%22none%22%20stroke%3D%22%237A9B52%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-dasharray%3D%2236.77%20117.16%22%20transform%3D%22rotate%28-88.0%2032%2032%29%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2224.5%22%20fill%3D%22none%22%20stroke%3D%22%23C8922A%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-dasharray%3D%2236.77%20117.16%22%20transform%3D%22rotate%282.0%2032%2032%29%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2224.5%22%20fill%3D%22none%22%20stroke%3D%22%238B3A0F%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-dasharray%3D%2236.77%20117.16%22%20transform%3D%22rotate%2892.0%2032%2032%29%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2224.5%22%20fill%3D%22none%22%20stroke%3D%22%235A7A8C%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22%20stroke-dasharray%3D%2236.77%20117.16%22%20transform%3D%22rotate%28182.0%2032%2032%29%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2211%22%20fill%3D%22%232D5016%22%2F%3E%3C%2Fsvg%3E">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+  :root{--bg:#F7F4EF;--surface:#FFFFFF;--surface2:#F0EDE6;--border:#E0D9CE;--text:#1A1714;--muted:#7A7168;--accent:#2D5016;--accent-light:#E8F0DE;--accent-hover:#3F5E22;--accent-light-hover:#DCE8CC;--accent2:#8B3A0F;--accent2-light:#FAF0E8;--danger:#C0392B;--danger-light:#FDECEA;--radius:10px;--radius-lg:16px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%;overflow-x:hidden;}
+  h1,h2,h3{font-family:'Playfair Display',serif;}
+  header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;flex-wrap:wrap;position:sticky;top:0;z-index:100;}
+  header h1{font-size:1.3rem;font-weight:600;letter-spacing:-0.02em;color:var(--accent);transition:color .25s;}
+  .nav-tabs{display:flex;gap:4px;}
+  .nav-tab{padding:6px 16px;border-radius:20px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
+  .nav-tab:hover{background:var(--surface2);color:var(--text);}
+  .nav-tab.active{background:var(--accent);color:white;}
+  .nav-tab,.btn,.filter-chip,.toast{transition:background-color .25s,border-color .25s,color .25s;}
+  .main{max-width:980px;margin:0 auto;padding:2rem 1.5rem;}
+  .view{display:none;}.view.active{display:block;}
+  .section-title{font-size:1.5rem;font-weight:600;margin-bottom:.25rem;}
+  .section-sub{color:var(--muted);font-size:14px;margin-bottom:1.5rem;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:1rem;}
+  .btn{padding:8px 18px;border-radius:8px;border:1px solid var(--border);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;background:var(--surface);color:var(--text);}
+  .btn:hover{background:var(--surface2);}
+  .btn-primary{background:var(--accent);color:white;border-color:var(--accent);}
+  .btn-primary:hover{background:var(--accent-hover);}
+  .btn-danger{background:var(--danger-light);color:var(--danger);border-color:transparent;padding:4px 10px;font-size:13px;}
+  .btn-sm{padding:4px 10px;font-size:13px;}
+  .btn-refresh{background:var(--accent-light);color:var(--accent);border-color:transparent;padding:4px 8px;font-size:13px;}
+  .btn-refresh:hover{background:var(--accent-light-hover);}
+  .btn-restes{background:#F5F0FC;color:#6B3FA0;border-color:transparent;padding:4px 8px;font-size:13px;}
+  .btn-restes:hover{background:#E8E0F8;}
+  .grid-cell.restes{background:#FDFBFF;}
+  .restes-label{font-size:13px;font-weight:500;color:#6B3FA0;display:flex;align-items:center;gap:6px;}
+  .restes-icon{font-size:14px;}
+  .slot-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+  .accomp-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:2px 9px;border-radius:20px;
+    border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;line-height:1.5;}
+  .accomp-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+  .accomp-btn.rempli{border-style:solid;border-color:transparent;background:var(--surface2);color:var(--text);}
+  .accomp-titre{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:7px;font-weight:500;}
+  .accomp-grille{display:flex;flex-wrap:wrap;gap:6px;}
+  .accomp-opt{font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;border-radius:20px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);cursor:pointer;transition:all .15s;}
+  .accomp-opt:hover{background:var(--surface2);}
+  .accomp-opt.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .form-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:1rem;}
+  .form-group{display:flex;flex-direction:column;gap:4px;}
+  .form-group label{font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  input[type=text],input[type=date],select,textarea{font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
+  input[type=text]:focus,input[type=date]:focus,select:focus{border-color:var(--accent);}
+  input[type=text]{width:200px;}select{min-width:140px;}
+  .menu-list{display:flex;flex-direction:column;gap:6px;}
+  .menu-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:background .12s;}
+  .menu-item:hover{background:var(--surface2);}
+  .menu-item-name{flex:1;font-size:14px;font-weight:500;}
+  .menu-item-ing{font-size:12px;color:var(--muted);flex:2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .cat-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+  .cat-viande-rouge{background:#FDF0F0;color:#8B1A1A;}
+  .cat-volaille{background:#FFF8E8;color:#7B5800;}
+  .cat-poisson{background:#E8F4FC;color:#004D7A;}
+  .cat-vegetarien{background:#EEF5E8;color:#2D5016;}
+  .cat-pates-riz{background:#F5F0FC;color:#6B3FA0;}
+  .cat-soupe{background:#FFF5E0;color:#B86800;}
+  .cat-autre{background:#F5F5F5;color:#4A4A4A;}
+  .week-grid{display:grid;grid-template-columns:100px 1fr 1fr;gap:0;background:var(--border);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);}
+  .grid-header{padding:10px 14px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--surface2);}
+  .grid-day-label{padding:0 14px;display:flex;align-items:center;background:var(--surface2);border-top:1px solid var(--border);}
+  .grid-day-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;}
+  .d-court{display:none;}
+  .grid-day-date{font-size:11px;color:var(--muted);}
+  .grid-cell{padding:8px 10px;background:var(--surface);border-top:1px solid var(--border);border-left:1px solid var(--border);min-height:70px;}
+  .grid-cell.absent{background:var(--surface2);}
+  .absent-label{font-size:12px;color:var(--muted);font-style:italic;display:flex;align-items:center;height:100%;gap:6px;}
+  .absent-icon{width:18px;height:18px;border-radius:50%;background:var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);flex-shrink:0;}
+  .slot-menu-name{font-size:14px;font-weight:500;margin-bottom:4px;line-height:1.3;}
+  .slot-actions{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;}
+  .empty-slot{display:flex;align-items:center;justify-content:center;height:100%;min-height:54px;color:var(--muted);font-size:12px;}
+  .exception-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;}
+  .exception-tag{display:flex;align-items:center;gap:6px;padding:4px 10px 4px 12px;background:var(--accent2-light);border:1px solid #F0CBB0;border-radius:20px;font-size:13px;color:var(--accent2);}
+  .exception-tag button{background:none;border:none;cursor:pointer;color:var(--accent2);font-size:14px;line-height:1;padding:0;opacity:.6;}
+  .exception-tag button:hover{opacity:1;}
+  .courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+  .courses-cat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;}
+  .courses-cat-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+  .courses-item{font-size:13px;padding:3px 0;border-bottom:1px solid var(--bg);display:flex;align-items:center;gap:6px;}
+  .courses-item:last-child{border-bottom:none;}
+  .courses-check{width:14px;height:14px;border-radius:3px;border:1px solid var(--border);flex-shrink:0;cursor:pointer;accent-color:var(--accent);}
+  .fam-legend{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;}
+  .fam-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;border:1px solid transparent;cursor:pointer;transition:all .15s;user-select:none;}
+  .fam-chip:hover{filter:brightness(.95);}
+  .fam-chip.off{background:var(--surface2)!important;color:var(--muted)!important;border-color:var(--border);}
+  .fam-chip.off .fam-dot{background:var(--border)!important;}
+  .fam-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .fam-count{opacity:.65;font-weight:400;}
+  .ing-card{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid transparent;border-left-width:4px;border-radius:var(--radius);font-size:14px;font-weight:500;transition:opacity .15s;}
+  .ing-card input{width:15px;height:15px;border-radius:3px;flex-shrink:0;cursor:pointer;}
+  .ing-card span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .ing-card.done{opacity:.4;}
+  .ing-card.done span{text-decoration:line-through;}
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:white;padding:10px 18px;border-radius:var(--radius);font-size:14px;font-weight:500;opacity:0;transform:translateY(8px);transition:all .25s;z-index:999;pointer-events:none;}
+  .toast.show{opacity:1;transform:translateY(0);}
+  .divider{height:1px;background:var(--border);margin:1.25rem 0;}
+  .empty-state{text-align:center;padding:2.5rem;color:var(--muted);}
+  .empty-state-icon{font-size:2rem;margin-bottom:.5rem;opacity:.4;}
+  .count-badge{display:inline-block;background:var(--surface2);color:var(--muted);font-size:12px;padding:1px 8px;border-radius:20px;margin-left:6px;}
+  .planner-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+  .search-bar{padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:14px;width:220px;outline:none;}
+  .search-bar:focus{border-color:var(--accent);}
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;align-items:center;}
+  .filter-chip{padding:4px 12px;border-radius:20px;border:1px solid var(--border);font-size:13px;font-weight:500;cursor:pointer;background:var(--surface);color:var(--muted);transition:all .15s;}
+  .filter-chip:hover{background:var(--surface2);}
+  .filter-chip.active{background:var(--accent);color:white;border-color:var(--accent);}
+
+
+  .modal-item{padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .12s;display:flex;align-items:center;gap:10px;}
+  .modal-item:hover{background:var(--accent-light);}
+  .modal-item-name{flex:1;font-size:14px;font-weight:500;}
+  .modal-item-ing{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;}
+  .badge-light{font-size:10px;padding:1px 6px;border-radius:10px;background:#E8F4FC;color:#004D7A;margin-left:4px;font-weight:500;}
+  .badge-heavy{font-size:10px;padding:1px 6px;border-radius:10px;background:#FFF5E0;color:#B86800;margin-left:4px;font-weight:500;}
+  .missing-ing{background:#FFFBF0;border-color:#F5DFA0;}
+
+  /* ── PRINT / PDF ──────────────────────────────── */
+  @media print {
+    body { background: white; font-size: 13px; }
+    header, .nav-tabs, .planner-controls, .card, .filter-row,
+    .slot-actions, .btn, button, .toast, #btn-export { display: none !important; }
+    .main { padding: 0; max-width: 100%; }
+    .view { display: block !important; }
+    #view-menus, #view-planner .card { display: none !important; }
+
+    /* PAGE 1 : Plan de la semaine */
+    .print-plan { display: block; page-break-after: always; }
+    .print-plan h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 4px; }
+    .print-plan .print-sub { font-size: 11px; color: #666; margin-bottom: 12px; }
+    .print-week { width: 100%; border-collapse: collapse; }
+    .print-week th { background: #f0ede6; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; padding: 6px 8px; border: 1px solid #ccc; text-align: left; }
+    .print-week td { border: 1px solid #ddd; padding: 7px 9px; vertical-align: top; font-size: 12px; min-width: 80px; }
+    .print-week td.day-label { background: #f8f6f2; font-weight: 600; font-size: 12px; white-space: nowrap; }
+    .print-week td.absent-cell { background: #f5f5f5; color: #999; font-style: italic; font-size: 11px; }
+    .print-week td.restes-cell { background: #fdfbff; color: #6B3FA0; font-style: italic; font-size: 11px; }
+    .print-cat { font-size: 10px; color: #888; margin-top: 2px; }
+
+    /* PAGE 2 : Liste de courses */
+    .print-courses { display: block; }
+    .print-courses h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 4px; }
+    .print-courses .print-sub { font-size: 11px; color: #666; margin-bottom: 12px; }
+    .print-ing-grid { columns: 3; column-gap: 16px; }
+    .print-ing-item { display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 3px 0; break-inside: avoid; border-bottom: 1px solid #eee; }
+    .print-ing-check { width: 11px; height: 11px; border: 1px solid #bbb; border-radius: 2px; flex-shrink: 0; display: inline-block; }
+    .print-ing-item { border-left: 4px solid #ccc; padding-left: 6px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-legend { margin-bottom: 10px; font-size: 10px; color: #555; display: flex; flex-wrap: wrap; gap: 10px; }
+    .print-legend span.k { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  .print-plan, .print-courses { display: none; }
+
+  @media(max-width:640px){
+    header{padding:9px 1rem;}
+    header h1{font-size:1.05rem;}
+    .nav-tabs{gap:3px;}
+    .nav-tab{padding:9px 13px;font-size:13px;}
+    .main{padding:1.1rem .9rem;}
+    .card{padding:1rem 1rem;}
+    /* champs : 16 px évite le zoom automatique de Safari iOS à la saisie */
+    input[type=text],input[type=date],select,textarea{font-size:16px;padding:10px 12px;}
+    .form-row{gap:8px;}
+    .form-row .form-group{flex:1 1 100%;}
+    .form-row input[type=text]{width:100%!important;max-width:none;}
+    .form-row select{width:100%;min-width:0;}
+    .btn{padding:10px 16px;}
+    .search-bar{width:100%;font-size:16px;padding:10px 12px;}
+    .filter-chip{padding:8px 14px;}
+    .fam-chip{padding:8px 13px;}
+    /* grille de la semaine : colonne des jours resserrée, boutons repliables */
+    .week-grid{grid-template-columns:50px 1fr 1fr;}
+    .d-long{display:none;}
+    .d-court{display:inline;}
+    .grid-cell{padding:7px 7px;}
+    .grid-day-label{padding:0 8px;}
+    .grid-day-name{font-size:13px;}
+    .slot-menu-name{font-size:13px;}
+    /* en largeur réduite, les boutons d'un créneau gardent l'icône seule :
+       une cible de 40 px tient alors sur une seule ligne */
+    .slot-actions{gap:3px;}
+    .slot-actions .lbl{display:none;}
+    .slot-actions .btn{min-width:38px;min-height:40px;padding:0 8px;font-size:15px;
+      display:inline-flex;align-items:center;justify-content:center;}
+    .nav-tab,.btn{min-height:40px;display:inline-flex;align-items:center;justify-content:center;}
+    .filter-chip,.fam-chip{min-height:36px;}
+    #modal-search{font-size:16px!important;padding:10px 12px!important;}
+    .accomp-btn{font-size:12px;padding:5px 11px;min-height:28px;}
+    .ing-card{padding:11px 12px;}
+    .ing-card input{width:18px;height:18px;}
+    .toast{left:12px;right:12px;bottom:14px;text-align:center;}
+  }
+  @media(max-width:390px){
+    header h1{font-size:1rem;}
+    .nav-tab{padding:9px 11px;font-size:12px;}
+    .week-grid{grid-template-columns:46px 1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Menu de la semaine</h1>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showView('planner')">Planifier</button>
+    <button class="nav-tab" onclick="showView('menus')">Menus</button>
+    <button class="nav-tab" onclick="showView('courses')">Courses</button>
+  </nav>
+</header>
+<main class="main">
+
+<!-- ═══ PLANNER ══ -->
+<div id="view-planner" class="view active">
+  <h2 class="section-title">Plan de la semaine</h2>
+  <p class="section-sub">Du jeudi au jeudi suivant · 16 créneaux midi & soir</p>
+  <div class="card">
+    <div class="planner-controls">
+      <div class="form-group">
+        <label>Début (jeudi) <span id="saison-badge" class="count-badge" style="margin-left:2px"></span></label>
+        <input type="date" id="start-date" onchange="appliquerTheme()" />
+      </div>
+      <button class="btn btn-primary" onclick="generatePlan()">✦ Générer le plan</button>
+      <button class="btn" onclick="clearPlan()">Effacer</button>
+    </div>
+    <div class="divider"></div>
+    <div style="font-weight:500;font-size:14px;margin-bottom:8px;">Exceptions <span style="font-weight:400;font-size:13px;color:var(--muted)">: créneaux sans menu cette semaine</span></div>
+    <div class="exception-list" id="exception-list"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Jour</label>
+        <select id="exc-day">
+          <option value="0">Jeudi</option><option value="1">Vendredi</option>
+          <option value="2">Samedi</option><option value="3">Dimanche</option>
+          <option value="4">Lundi</option><option value="5">Mardi</option>
+          <option value="6">Mercredi</option><option value="7">Jeudi (fin)</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Moment</label>
+        <select id="exc-moment">
+          <option value="midi">Midi</option><option value="soir">Soir</option><option value="both">Midi & Soir</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Raison</label>
+        <input type="text" id="exc-reason" placeholder="APEMS, anniversaire…" style="width:180px" onkeydown="if(event.key==='Enter')addException()" />
+      </div>
+      <button class="btn" onclick="addException()">+ Ajouter</button>
+    </div>
+  </div>
+  <div id="week-grid-container"></div>
+</div>
+
+<!-- ═══ MENUS ══ -->
+<div id="view-menus" class="view">
+  <h2 class="section-title">Mes menus <span class="count-badge" id="menu-count">0</span></h2>
+  <p class="section-sub">Toutes les recettes de Papa & Maman : modifiez les ingrédients si nécessaire</p>
+  <div class="card">
+    <div style="font-weight:500;font-size:14px;margin-bottom:12px;">Ajouter un menu</div>
+    <div class="form-row">
+      <div class="form-group"><label>Nom du plat</label>
+        <input type="text" id="new-name" placeholder="ex: Poulet rôti" style="width:220px" onkeydown="if(event.key==='Enter')addMenu()" />
+      </div>
+      <div class="form-group"><label>Catégorie</label>
+        <select id="new-cat">
+          <option value="viande-rouge">Viande rouge</option>
+          <option value="volaille">Volaille</option>
+          <option value="poisson">Poisson</option>
+          <option value="vegetarien">Végétarien</option>
+          <option value="pates-riz">Pâtes / Riz</option>
+          <option value="soupe">Soupe</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>Ingrédients principaux</label>
+      <input type="text" id="new-ing" placeholder="ingrédient1, ingrédient2, …" style="width:100%;max-width:500px" />
+    </div>
+    <button class="btn btn-primary" onclick="addMenu()">+ Ajouter</button>
+  </div>
+  <div class="filter-row">
+    <input type="text" class="search-bar" id="search-menu" placeholder="Rechercher un plat…" oninput="renderMenus()" />
+    <button class="filter-chip active" data-cat="all" onclick="setFilter('all')">Tous</button>
+    <button class="filter-chip" data-cat="volaille" onclick="setFilter('volaille')">Volaille</button>
+    <button class="filter-chip" data-cat="viande-rouge" onclick="setFilter('viande-rouge')">Viande rouge</button>
+    <button class="filter-chip" data-cat="poisson" onclick="setFilter('poisson')">Poisson</button>
+    <button class="filter-chip" data-cat="vegetarien" onclick="setFilter('vegetarien')">Végétarien</button>
+    <button class="filter-chip" data-cat="pates-riz" onclick="setFilter('pates-riz')">Pâtes/Riz</button>
+    <button class="filter-chip" data-cat="soupe" onclick="setFilter('soupe')">Soupe</button>
+  </div>
+  <div id="menu-list-container"></div>
+</div>
+
+<!-- ═══ COURSES ══ -->
+<div id="view-courses" class="view">
+  <h2 class="section-title">Liste de courses</h2>
+  <p class="section-sub">Ingrédients agrégés depuis le plan courant</p>
+  <div style="display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="generateCourses()">Générer depuis le plan</button>
+    <button class="btn" id="btn-export" onclick="exportPDF()" style="display:none">📄 Exporter en PDF</button>
+  </div>
+  <div id="courses-container"><div class="empty-state"><div class="empty-state-icon">🛒</div><div>Générez d'abord un plan de menus</div></div></div>
+</div>
+
+<!-- ═══ PRINT LAYOUT (hidden on screen) ══ -->
+<div class="print-plan" id="print-plan"></div>
+<div class="print-courses" id="print-courses"></div>
+
+<!-- ═══ ACCOMPAGNEMENT ══ -->
+<div id="accomp-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:210;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border-radius:var(--radius-lg);padding:1.4rem;width:min(460px,92vw);max-height:84vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+    <div id="accomp-contenu"></div>
+  </div>
+</div>
+
+<!-- ═══ MENU PICKER MODAL ══ -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border-radius:var(--radius-lg);padding:1.5rem;width:min(520px,92vw);max-height:80vh;display:flex;flex-direction:column;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;">Choisir un menu</h3>
+      <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--muted);">✕</button>
+    </div>
+    <div style="font-size:13px;color:var(--muted);" id="modal-slot-label"></div>
+    <input type="text" id="modal-search" placeholder="Rechercher…" oninput="renderModalList()" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;" />
+    <div id="modal-filter-row" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+    <div id="modal-list" style="overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:5px;"></div>
+  </div>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const DAYS=['Jeudi','Vendredi','Samedi','Dimanche','Lundi','Mardi','Mercredi','Jeudi'];
+const SLOTS=['midi','soir'];
+const CAT_LABELS={'viande-rouge':'Viande rouge','volaille':'Volaille','poisson':'Poisson','vegetarien':'Végétarien','pates-riz':'Pâtes / Riz','soupe':'Soupe','autre':'Autre'};
+// ── FAMILLES D'INGRÉDIENTS (code couleur de la liste de courses) ──
+const ING_FAM={
+  legume:   {label:'Légumes & fruits',     color:'#2D5016', bg:'#DFEBD2'},
+  viande:   {label:'Viandes & poissons',   color:'#8B1A1A', bg:'#F8DEDE'},
+  cremerie: {label:'Crèmerie & œufs',      color:'#7B5800', bg:'#FBEFD0'},
+  feculent: {label:'Féculents & pains',    color:'#6B3FA0', bg:'#EADFF8'},
+  epicerie: {label:'Épicerie & condiments',color:'#9A5600', bg:'#FCE7C4'}
+};
+const FAM_ORDER=['legume','viande','cremerie','feculent','epicerie'];
+// Règles ordonnées : la première correspondance gagne. Les pièges sont traités en tête.
+const ING_RULES=[
+  [/beurre de cacahuete|lait de coco|creme de coco/,'epicerie'],
+  [/pate de (curry|miso|tamarin|tomate)|pate massaman|roux de curry|cube de golden/,'epicerie'],
+  [/sauce|bouillon|fond de |\ben conserve\b|conserve/,'epicerie'],
+  [/tomates? (concassees?|pelees?)|concentre de tomate|concentre tomate/,'epicerie'],
+  [/tomate/,'legume'],
+  [/champignon|chanterelle|girolle|\bcepe|shiitake|pleurote|morille/,'legume'],
+  [/pousses de soja|edamame|daikon|bambou/,'legume'],
+  [/muscade/,'epicerie'],
+  [/\bmoelle\b/,'viande'],
+  [/pate (brisee|feuilletee|fraiche|a pizza|a tarte)|pates? fraiche/,'feculent'],
+  [/\bboeuf|\bveau\b|\bporc\b|poulet|canard|dinde|agneau|chevreuil|\bcerf\b|sanglier|faisan|gibier|magret|steak|chateaubriant|fricandeau|\bselle de|palette|volaille/,'viande'],
+  [/\blard\b|lardons|lard (fume|de)|pancetta|jambon|saucisse|saucisson|salami|\bviande\b|hache|poitrine/,'viande'],
+  [/saumon|\bthon\b|fletan|\blotte\b|poisson|crevette|calamar|\bmoules?\b|fruits de mer|anchois|cabillaud|truite|surimi/,'viande'],
+  [/oeuf|\bcreme\b|creme (fraiche|entiere|liquide|acidulee)|\bbeurre\b|beurre a rotir|\blait\b|fromage|gruyere|parmesan|pecorino|mozzarella|\bfeta\b|ricotta|mascarpone|gorgonzola|reblochon|raclette|sbrinz|\btofu\b|bechamel|yaourt|skyr/,'cremerie'],
+  [/\briz\b|riz |crouton|nouille|vermicelle|gnocchi|lasagne|\borzo\b|quinoa|couscous|boulgour|polenta|spaghetti|\bpates?\b|\bpain\b|pain |pita|tortilla|\bbao\b|galette|brioche|feuillete|vol au vent|pizza|ravioli|lentille|pois chiches|haricots (blancs|secs)|pommes? de terre|patate|rosti|semoule/,'feculent'],
+  [/vinaigre|huile|moutarde|harissa|capres|olives|tahin|mayonnaise|confiture|miel|sucre|chocolat|kirsch|\bvin\b|vin |biere|sake|mirin|madere|levure|maizena|fecule|panko|chapelure|farine|sesame|cacahuete|\bnoix\b|noisette|pignon|cajou|amande|algues|wakame|bonite|kaffir|anis|cannelle|cardamome|cumin|curcuma|curry|garam|paprika|safran|epice|piment|genievre|laurier|\bthym\b|romarin|sauge|origan|herbes de provence|\bsel\b|poivre|\beau\b|\bsoja\b|huitre|dashi|miso|farce|garniture/,'epicerie'],
+  [/legume|salade|laitue|romaine|roquette|mache|cresson|carotte|oignon|echalote|\bail\b|poireau|courgette|aubergine|poivron|concombre|courge|butternut|potiron|citrouille|brocoli|\bchou|epinard|blette|celeri|\bnavet\b|radis|betterave|fenouil|asperge|artichaut|petits pois|pois gourmand|haricots verts|\bmais\b|avocat|citron|orange|\bpomme\b|\bpoire\b|mangue|fraise|framboise|rhubarbe|banane|basilic|persil|coriandre|menthe|ciboul|aneth|estragon|citronnelle|gingembre|marron|\bherbes\b/,'legume']
+];
+function ingFam(name){
+  const n=(name||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/œ/g,'oe');
+  for(const [re,f] of ING_RULES) if(re.test(n)) return f;
+  return 'epicerie';
+}
+const DEFAULT_RECIPES=[{"id": "r001", "name": "Poulet curry vert", "cat": "volaille", "ing": "cuisses de poulet, pâte de curry vert, lait de coco, poivrons, aubergines, basilic thaï, sauce poisson, huile, oignon, courgette, sucre roux, citron vert", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r002", "name": "Poulet curry jaune", "cat": "volaille", "ing": "cuisses de poulet, pâte de curry jaune, lait de coco, pommes de terre, oignons, sauce poisson, curcuma, carottes, sucre roux, citron vert, coriandre fraîche", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r003", "name": "Poulet curry rouge", "cat": "volaille", "ing": "cuisses de poulet, pâte de curry rouge, lait de coco, poivrons, sauce poisson, basilic thaï, huile, courgette, oignon, sucre roux, citron vert", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r004", "name": "Poulet massaman", "cat": "volaille", "ing": "cuisses de poulet, pâte massaman, lait de coco, pommes de terre, oignons, cacahuètes, cannelle, anis étoilé, sauce nuoc-mâm, sauce soja, pâte de tamarin, cardamome", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r005", "name": "Poulet à la citronnelle", "cat": "volaille", "ing": "blanc de poulet, citronnelle, ail, gingembre, sauce poisson, sucre, piment, huile", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r006", "name": "Poulet au curry et mini aubergines", "cat": "volaille", "ing": "poulet, pâte de curry, mini aubergines, lait de coco, sauce poisson, kaffir lime", "light": null, "months": [3, 4, 5, 6, 7, 8, 9]}, {"id": "r007", "name": "Poulet orange et riz sauvage", "cat": "volaille", "ing": "filets de poulet, jus d'orange, zeste d'orange, riz sauvage, échalotes, beurre, thym", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r008", "name": "Poulet sauté aux noix de cajou", "cat": "volaille", "ing": "blanc de poulet, noix de cajou, poivrons, oignons, sauce soja, sauce huître, ail, piment séché", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r009", "name": "Brochette de poulet satay", "cat": "volaille", "ing": "blanc de poulet, beurre de cacahuète, sauce soja, lait de coco, curry, citron vert, ail, gingembre, sauce nuoc-mâm, miel, huile de sésame, curcuma", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r010", "name": "Wok poulet sauce cacahuète", "cat": "volaille", "ing": "blanc de poulet, beurre de cacahuète, sauce soja, courgettes, carottes, riz, graines de sésame, ail, huile d'olive, sel", "light": null, "months": [4, 5, 6, 7, 8, 9]}, {"id": "r011", "name": "Donburi poulet teriyaki", "cat": "volaille", "ing": "cuisses de poulet, sauce soja, mirin, saké, miel, ail, gingembre, riz japonais, brocoli, carottes, champignons", "light": null, "months": [4, 5, 6, 7, 8, 9, 10]}, {"id": "r012", "name": "Cordon bleu sauce tomate", "cat": "volaille", "ing": "escalopes de poulet, jambon cuit, fromage, chapelure, oeufs, farine, tomates concassées, ail, basilic", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r013", "name": "Filet de poulet pané", "cat": "volaille", "ing": "filets de poulet, chapelure, oeufs, farine, sel, poivre, huile de friture", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r014", "name": "Tasty crousti (street food)", "cat": "volaille", "ing": "cuisses de poulet, fécule de maïs, farine, oeuf, sauce soja, ail, gingembre, sauce sriracha, miel, filets de poulet, lait, paprika", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r015", "name": "Canard sauce miel et orange", "cat": "volaille", "ing": "magrets de canard, jus d'orange, miel, sauce soja, ail, gingembre, vinaigre balsamique, échalote, beurre, sel", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r016", "name": "Canard à la citronnelle", "cat": "volaille", "ing": "canard, citronnelle, lait de coco, ail, gingembre, sauce poisson, piment, citron vert", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r017", "name": "Velouté petits pois et poulet", "cat": "volaille", "ing": "petits pois surgelés, blanc de poulet, bouillon de volaille, crème fraîche, oignons, menthe", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r018", "name": "Salade façon nord-thaïlandaise", "cat": "volaille", "ing": "blanc de poulet haché, échalotes, menthe, coriandre, citron vert, sauce poisson, piment, riz grillé", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r020", "name": "Émincé de bœuf", "cat": "viande-rouge", "ing": "émincé de bœuf, oignons, crème fraîche, bouillon, beurre, sel, poivre, persil", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r021", "name": "Bao de bœuf", "cat": "viande-rouge", "ing": "bœuf haché, bao (brioche vapeur), chou, carottes, sauce hoisin, sauce soja, gingembre, ail, farine, levure de boulanger, sucre en poudre, oignon", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r022", "name": "Bœuf grillé sauce piquante", "cat": "viande-rouge", "ing": "steak de bœuf, sauce soja, sauce piment, ail, gingembre, citron vert, sucre, coriandre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r023", "name": "Bœuf thaï", "cat": "viande-rouge", "ing": "bœuf émincé, basilic thaï, ail, piment, sauce poisson, sauce huître, sucre de palme, haricots verts", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r024", "name": "Butternut à la viande de maman", "cat": "viande-rouge", "ing": "courge butternut, bœuf haché, oignons, tomates concassées, cumin, curcuma, cannelle, pignons", "light": null, "months": [0, 1, 7, 8, 9, 10, 11]}, {"id": "r025", "name": "Chasse : chevreuil", "cat": "viande-rouge", "ing": "selle de chevreuil, sauce grand veneur, marrons, baies de genièvre, thym, laurier, vin rouge, crème", "light": false, "months": [8, 9, 10, 11]}, {"id": "r026", "name": "Chasse : faisan", "cat": "viande-rouge", "ing": "faisan, lardons, champignons, crème fraîche, vin blanc, échalotes, thym, laurier, beurre, sel, fond de volaille, moutarde de dijon", "light": false, "months": [8, 9, 10, 11]}, {"id": "r027", "name": "Médaillons de sanglier sauce forestière", "cat": "viande-rouge", "ing": "filet de sanglier, champignons des bois, crème fraîche, noisettes, échalotes, vin rouge, beurre, thym, champignons forestiers, vin blanc sec, moutarde douce, sel", "light": false, "months": [5, 6, 7, 8, 9]}, {"id": "r028", "name": "Filet de cerf sauce grand veneur", "cat": "viande-rouge", "ing": "filet de cerf, vin rouge, bouillon, baies de genièvre, thym, laurier, crème, beurre, chocolat noir, sel, échalote, fond de gibier", "light": false, "months": [8, 9, 10, 11]}, {"id": "r029", "name": "Châteaubriant basse température", "cat": "viande-rouge", "ing": "châteaubriant, beurre, ail, romarin, thym, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r030", "name": "Hachis parmentier de maman", "cat": "viande-rouge", "ing": "bœuf haché, pommes de terre, marrons, oignons, tomates concassées, beurre, lait, gruyère râpé", "light": false, "months": [0, 8, 9, 10, 11]}, {"id": "r031", "name": "Lasagnes à l'ancienne", "cat": "viande-rouge", "ing": "bœuf haché, plaques de lasagnes, sauce bolognaise, béchamel, gruyère râpé, oignons, ail, tomates, carottes, céleri, huile d'olive, sucre", "light": false, "months": [3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r032", "name": "Sauce bolognaise", "cat": "viande-rouge", "ing": "bœuf haché, tomates concassées, oignons, ail, carotte, céleri, vin rouge, concentré tomate, basilic, huile d'olive extra vierge, pancetta, pâte de tomates", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r033", "name": "Ragoût de bœuf à l'ancienne", "cat": "viande-rouge", "ing": "bœuf à braiser, carottes, oignons, pommes de terre, tomates concassées, vin rouge, bouillon, thym, laurier, bœuf à ragoût, farine, huile", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r034", "name": "Rôti haché au four", "cat": "viande-rouge", "ing": "bœuf haché, chapelure, oignons, ail, moutarde, herbes de Provence, sel, poivre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r035", "name": "Vol au vent", "cat": "viande-rouge", "ing": "vol au vent (feuilletés), veau, champignons, beurre, farine, bouillon, crème, jaune d'oeuf, citron", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r036", "name": "Fricandeau de mémé", "cat": "viande-rouge", "ing": "fricandeau de veau, lardons, carottes, oignons, bouillon, vin blanc, thym, laurier, beurre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r037", "name": "Choucroute", "cat": "viande-rouge", "ing": "choucroute, saucisses, lard, palette, pommes de terre, baies de genièvre, vin blanc, oignons", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r038", "name": "Papet vaudois", "cat": "viande-rouge", "ing": "saucisse aux choux, poireaux, pommes de terre, bouillon, laurier, sel, poivre, vin blanc, crème", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r039", "name": "Saucisse à rôtir de maman", "cat": "viande-rouge", "ing": "saucisse à rôtir, moutarde, oignons, vin blanc, beurre, laurier, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r040", "name": "Curry rouge de bœuf", "cat": "viande-rouge", "ing": "bœuf à braiser, pâte de curry rouge, lait de coco, bambou, poivrons, sauce poisson, basilic thaï", "light": false, "months": [5, 6, 7, 8, 9]}, {"id": "r041", "name": "Donburi bœuf", "cat": "viande-rouge", "ing": "bœuf tranché fin, oignons, sauce soja, mirin, saké, sucre, riz japonais, dashi, poulet pané", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r042", "name": "Riz au porc frit", "cat": "viande-rouge", "ing": "porc haché, riz cuit froid, oeufs, oignons verts, sauce soja, huile de sésame, ail, gingembre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r043", "name": "Porc sauté au gingembre", "cat": "viande-rouge", "ing": "porc émincé, gingembre frais, sauce soja, mirin, sake, oignons verts, huile de sésame", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r044", "name": "Ramen au lard et oeuf de papa", "cat": "viande-rouge", "ing": "lard de poitrine, nouilles ramen, oeufs, bouillon de porc, sauce soja, mirin, ail, gingembre, maïs", "light": false, "months": [6, 7, 8, 9]}, {"id": "r045", "name": "Jambon docteur", "cat": "viande-rouge", "ing": "tranches de jambon blanc, crème fraîche, concentré de tomate, vin de madère, paprika, maïzena, sel, poivre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r046", "name": "Croc monsieur", "cat": "viande-rouge", "ing": "pain de mie, jambon cuit, gruyère, béchamel, beurre, moutarde", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r050", "name": "Saumon grillé asperges et purée ail", "cat": "poisson", "ing": "filets de saumon, asperges, pommes de terre, ail, lait, beurre, huile d'olive, citron", "light": null, "months": [3, 4, 5]}, {"id": "r051", "name": "Saumon sucré-épicé", "cat": "poisson", "ing": "filets de saumon, sauce soja, miel, sauce sriracha, ail, gingembre, sésame, oignons verts", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r052", "name": "Saumon à la sauce oignon", "cat": "poisson", "ing": "filets de saumon, oignons, crème fraîche, vin blanc, beurre, aneth, sel, poivre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r053", "name": "Bowl de saumon", "cat": "poisson", "ing": "saumon frais, riz japonais, avocat, concombre, edamame, graines de sésame, sauce soja, mayonnaise", "light": true, "months": [3, 4, 5, 6, 7, 8]}, {"id": "r054", "name": "Filet de flétan sauce vin blanc", "cat": "poisson", "ing": "filets de flétan, champignons des bois, vin blanc, beurre, échalotes, crème, persil, citron", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r055", "name": "Joue de lotte au lait de coco", "cat": "poisson", "ing": "joues de lotte, lait de coco, citronnelle, gingembre, ail, piment, coriandre, citron vert", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r056", "name": "Pâtes sauce tomate au thon", "cat": "poisson", "ing": "pâtes, thon en conserve, tomates concassées, ail, oignons, câpres, basilic, huile d'olive", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r057", "name": "Spaghetti au thon", "cat": "poisson", "ing": "spaghetti, thon en conserve, tomates, ail, câpres, olives, persil", "light": null, "months": [3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r058", "name": "Calamars à l'ail de maman", "cat": "poisson", "ing": "calamars, ail, persil, huile d'olive, citron, sel, poivre, vin blanc", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r059", "name": "Riz sauté aux fruits de mer", "cat": "poisson", "ing": "riz cuit froid, crevettes, calamars, moules, oeufs, sauce soja, ail, oignons verts, huile", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r060", "name": "Tempura de crevettes", "cat": "poisson", "ing": "grosses crevettes, farine, fécule de maïs, eau glacée, sauce soja, mirin, daikon, huile de friture, crevettes crues, œuf, riz à sushi, sel", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r061", "name": "Vermicelles aux crevettes", "cat": "poisson", "ing": "vermicelles de riz, crevettes, ail, gingembre, sauce poisson, citron vert, piment, coriandre", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r062", "name": "Bowl avocat crevette", "cat": "poisson", "ing": "crevettes, avocat, riz, concombre, mangue, sauce soja, mayonnaise, sésame, citron vert", "light": true, "months": [3, 4, 5, 6, 7, 8]}, {"id": "r063", "name": "Poisson au four de mémé", "cat": "poisson", "ing": "filets de poisson blanc, tomates, oignons, ail, herbes de Provence, huile d'olive, citron, vin blanc", "light": true, "months": [3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r064", "name": "Rouleau d'été", "cat": "poisson", "ing": "galettes de riz, crevettes, avocat, carottes, concombre, vermicelles, menthe, sauce nuoc-mâm", "light": true, "months": [3, 4, 5, 6, 7, 8]}, {"id": "r070", "name": "Quiche aux épinards et céleri", "cat": "vegetarien", "ing": "pâte brisée, épinards, céleri, oeufs, crème fraîche, gruyère, sel, poivre, muscade", "light": false, "months": [2, 3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r071", "name": "Gratin de chou-fleur et brocolis", "cat": "vegetarien", "ing": "chou-fleur, brocoli, béchamel, gruyère râpé, beurre, farine, lait, muscade, sel", "light": false, "months": [4, 5, 6, 7, 8, 9, 10]}, {"id": "r072", "name": "Gratin de carottes au miel", "cat": "vegetarien", "ing": "carottes, miel, beurre, crème fraîche, gruyère, sel, poivre, thym", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r073", "name": "Gratin de pâtes de maman", "cat": "vegetarien", "ing": "pâtes, béchamel, gruyère, lardons, oeufs, crème fraîche, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r074", "name": "Gratin de quinoa aux poireaux", "cat": "vegetarien", "ing": "quinoa, poireaux, crème fraîche, gruyère, oeufs, beurre, sel, poivre, muscade", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r075", "name": "Dal de lentilles corail", "cat": "vegetarien", "ing": "lentilles corail, tomates concassées, lait de coco, oignons, gingembre, curcuma, cumin, garam masala", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r076", "name": "Curry de légumes au cinq-épices", "cat": "vegetarien", "ing": "légumes variés, cinq-épices, lait de coco, tomates, oignons, ail, gingembre, coriandre, citrouille, mini épis de maïs doux, huile de tournesol, pâte de curry rouge", "light": null, "months": [7, 8, 9]}, {"id": "r077", "name": "Curry de potiron aux haricots verts", "cat": "vegetarien", "ing": "potiron, haricots verts, lait de coco, pâte de curry, oignons, ail, gingembre, coriandre", "light": null, "months": [7, 8, 9]}, {"id": "r078", "name": "Curry japonais", "cat": "vegetarien", "ing": "roux de curry japonais, pommes de terre, carottes, oignons, bouillon, riz japonais, cube de golden curry, escalopes de poulet", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r079", "name": "Couscous", "cat": "vegetarien", "ing": "semoule de couscous, légumes variés, pois chiches, courgettes, carottes, navet, oignons, harissa, bouillon", "light": null, "months": [3, 4, 5, 6, 7, 8, 9]}, {"id": "r080", "name": "Poivrons farcis de maman", "cat": "vegetarien", "ing": "poivrons, riz, oignons, tomates, ail, herbes, huile d'olive, sel, poivre, gruyère", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r081", "name": "Rösti et oeuf poêlé", "cat": "vegetarien", "ing": "pommes de terre, oeufs, beurre, sel, poivre, oignons", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r082", "name": "Tartiflette", "cat": "vegetarien", "ing": "pommes de terre, reblochon, lardons, oignons, vin blanc, crème fraîche, ail", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r083", "name": "Croûte au fromage de grand-papa", "cat": "vegetarien", "ing": "pain de campagne, gruyère râpé, vin blanc, beurre, ail, sel, poivre", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r084", "name": "Croûte dorée", "cat": "vegetarien", "ing": "pain de mie, fromage râpé, oeufs, lait, beurre, sel, poivre, muscade", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r085", "name": "Côte de blette à la béchamel", "cat": "vegetarien", "ing": "côtes de blette, béchamel, gruyère râpé, beurre, farine, lait, sel, poivre, muscade", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r086", "name": "Gâteau au fromage de arrière-pépé", "cat": "vegetarien", "ing": "fromage blanc, oeufs, farine, ciboulette, sel, poivre, beurre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r087", "name": "Tortilla espagnole", "cat": "vegetarien", "ing": "pommes de terre, oeufs, oignons, huile d'olive, sel, poivre", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r088", "name": "Okonomiyaki (galette japonaise)", "cat": "vegetarien", "ing": "chou blanc, farine, oeufs, lardons, dashi, sauce okonomiyaki, mayonnaise, bonite séchée", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r089", "name": "Crêpes salées", "cat": "vegetarien", "ing": "farine de sarrasin, oeufs, lait, beurre, sel, jambon, fromage", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r090", "name": "Fondue à la tomate", "cat": "vegetarien", "ing": "fromage à fondue, vin blanc, tomates pelées, ail, maïzena, kirsch, pain, fécule de maïs, poivre noir, muscade, origan", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r091", "name": "Épinard à la crème de maman", "cat": "vegetarien", "ing": "épinards frais, crème fraîche, beurre, ail, sel, poivre, muscade", "light": true, "months": [2, 3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r092", "name": "Œufs Mayak (coréens)", "cat": "vegetarien", "ing": "oeufs mollets, sauce soja, mirin, eau, sucre, ail, oignons verts, piment, sel, vinaigre blanc, miel", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r093", "name": "Salade de quinoa avocat", "cat": "vegetarien", "ing": "quinoa, avocat, tomates cerises, concombre, feta, citron, huile d'olive, herbes", "light": true, "months": [3, 4, 5, 6, 7, 8]}, {"id": "r094", "name": "Tomates au four", "cat": "vegetarien", "ing": "tomates, ail, chapelure, persil, huile d'olive, sel, poivre, herbes de Provence, parmesan", "light": true, "months": [3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r095", "name": "Tartelette fromage épinard", "cat": "vegetarien", "ing": "pâte brisée, épinards, ricotta, oeufs, crème, sel, poivre, muscade, parmesan", "light": false, "months": [2, 3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r100", "name": "Risotto champignons", "cat": "pates-riz", "ing": "riz arborio, champignons de Paris, bouillon de volaille, parmesan, oignons, vin blanc, beurre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r101", "name": "Risotto crémeux champignons et blettes", "cat": "pates-riz", "ing": "riz arborio, champignons des bois, blettes, parmesan, bouillon, oignons, vin blanc, beurre, crème", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r102", "name": "Risotto aux asperges", "cat": "pates-riz", "ing": "riz arborio, asperges vertes, bouillon de légumes, parmesan, oignons, vin blanc, beurre, citron, ail, riz à risotto, sbrinz, crème", "light": null, "months": [3, 4, 5]}, {"id": "r103", "name": "Risotto au safran", "cat": "pates-riz", "ing": "riz arborio, safran, bouillon de volaille, parmesan, oignons, vin blanc, beurre, moelle", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r104", "name": "Risotto carotte de maman", "cat": "pates-riz", "ing": "riz arborio, carottes, bouillon, parmesan, oignons, vin blanc, beurre, gingembre, curcuma", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r105", "name": "Risotto de courge et émincé de bœuf", "cat": "pates-riz", "ing": "riz arborio, courge butternut, émincé de bœuf, bouillon, parmesan, oignons, vin blanc, sauge", "light": false, "months": [0, 1, 7, 8, 9, 10, 11]}, {"id": "r106", "name": "Pâtes carbonara", "cat": "pates-riz", "ing": "spaghetti, lardons, oeufs, parmesan, pecorino, poivre noir, sel", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r107", "name": "Pâtes au pesto vert", "cat": "pates-riz", "ing": "pâtes, basilic, parmesan, pignons, ail, huile d'olive, sel", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r108", "name": "Pâtes mascarpone gorgonzola", "cat": "pates-riz", "ing": "pâtes, mascarpone, gorgonzola, noix, parmesan, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r109", "name": "Gnocchi sauce tomate", "cat": "pates-riz", "ing": "gnocchi, tomates concassées, ail, basilic, huile d'olive, parmesan, sel, poivre", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r110", "name": "Nouilles sautées aux légumes", "cat": "pates-riz", "ing": "nouilles, carottes, courgettes, poivrons, sauce soja, huile de sésame, ail, gingembre, champignons shiitaké, chou blanc, pousses de soja, oignons nouveaux", "light": true, "months": [5, 6, 7, 8, 9]}, {"id": "r111", "name": "Salade de nouilles asiatiques", "cat": "pates-riz", "ing": "nouilles, pois gourmands, poivrons, chou blanc, piment, sauce teriyaki, vinaigre, gingembre, miel", "light": true, "months": [5, 6, 7, 8, 9]}, {"id": "r112", "name": "Pizza maison", "cat": "pates-riz", "ing": "pâte à pizza, sauce tomate, mozzarella, garniture au choix, huile d'olive, origan", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r113", "name": "Ravioli frais", "cat": "pates-riz", "ing": "pâte fraîche, farine, oeufs, farce au choix, beurre, sauge, parmesan", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r114", "name": "Riz cantonnais", "cat": "pates-riz", "ing": "riz cuit froid, oeufs, petits pois, jambon, carottes, oignons verts, sauce soja, huile, maïs, saucisse chinoise de canton, ciboules", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r115", "name": "Riz au curry et légumes", "cat": "pates-riz", "ing": "riz basmati, légumes variés, curry en poudre, oignons, ail, lait de coco, bouillon", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r116", "name": "Beef or fun (malaisien)", "cat": "pates-riz", "ing": "nouilles de riz larges, bœuf, soja, ciboulette, huître, ail, gingembre", "light": null, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r120", "name": "Velouté de petits pois", "cat": "soupe", "ing": "petits pois surgelés, bouillon de légumes, oignons, crème fraîche, menthe, sel, poivre", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r121", "name": "Velouté de petits pois basilic", "cat": "soupe", "ing": "petits pois, basilic frais, bouillon, crème, oignons, ail, sel, poivre", "light": true, "months": [5, 6, 7]}, {"id": "r122", "name": "Velouté de butternut", "cat": "soupe", "ing": "courge butternut, bouillon de légumes, oignons, crème fraîche, noix de muscade, gingembre, sel", "light": true, "months": [0, 1, 7, 8, 9, 10, 11]}, {"id": "r123", "name": "Velouté de petit marron", "cat": "soupe", "ing": "marrons, bouillon de volaille, oignons, crème fraîche, beurre, sel, poivre, thym", "light": true, "months": [0, 8, 9, 10, 11]}, {"id": "r124", "name": "Soupe de légumes", "cat": "soupe", "ing": "légumes de saison, bouillon, oignons, ail, herbes, sel, poivre", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r125", "name": "Haricots sec lard patate", "cat": "soupe", "ing": "haricots blancs secs, lard, pommes de terre, oignons, ail, bouillon, laurier, thym, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r047", "name": "Fajitas", "cat": "viande-rouge", "ing": "émincé de bœuf, tortillas, poivrons, oignons, épices tex-mex, citron vert, huile, crème acidulée", "light": null, "months": [5, 6, 7, 8, 9]}, {"id": "r048", "name": "Boulettes de viande IKEA", "cat": "viande-rouge", "ing": "bœuf haché, porc haché, oignon, chapelure, pommes de terre, crème liquide, sauce soja, bouillon, sel", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r049", "name": "Choucroute de Lyse-May", "cat": "viande-rouge", "ing": "choucroute, bière blonde, saucisson, lard fumé, jambon, saucisses de Vienne, pommes de terre, carottes, poire, baies de genièvre", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r133", "name": "Poêlée paysanne", "cat": "viande-rouge", "ing": "pommes de terre, lardons, oignons, saucisse, ail, persil, beurre, sel, poivre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r065", "name": "Crevettes à la citronnelle et au piment", "cat": "poisson", "ing": "crevettes, citronnelle, piment, ail, sauce poisson, citron vert, coriandre, huile", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r066", "name": "Crevettes à l'ail, tomates et basilic", "cat": "poisson", "ing": "crevettes décortiquées, tomates cœur de bœuf, ail, huile d'olive, basilic, citron, paprika, feta, sel", "light": true, "months": [3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r096", "name": "Crousti de chou-fleur de maman", "cat": "vegetarien", "ing": "chou-fleur, chapelure, oeufs, farine, parmesan, ail, paprika, huile", "light": false, "months": [4, 5, 6, 7, 8, 9, 10]}, {"id": "r097", "name": "Légumes au lait de coco", "cat": "vegetarien", "ing": "courgettes, carottes, pommes de terre, lait de coco, échalotes, ail, oignon, curry, coriandre, gingembre", "light": true, "months": [4, 5, 6, 7, 8, 9]}, {"id": "r098", "name": "Œufs, sauce blanche, épinards et pommes de terre", "cat": "vegetarien", "ing": "oeufs, épinards, béchamel, pommes de terre, beurre, farine, lait, muscade, sel, poivre", "light": true, "months": [2, 3, 4, 5, 6, 7, 8, 9, 10]}, {"id": "r099", "name": "Pain pita, houmous et légumes", "cat": "vegetarien", "ing": "pain pita, pois chiches, tahin, citron, ail, cumin, carottes, concombre, poivron, radis blanc, échalote, paprika", "light": true, "months": [5, 6, 7, 8]}, {"id": "r130", "name": "Korokke (croquettes japonaises)", "cat": "vegetarien", "ing": "pommes de terre, oignons, panko, oeufs, farine, muscade, huile de friture", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r131", "name": "Oyaki (chaussons japonais farcis)", "cat": "vegetarien", "ing": "farine, eau, aubergines, champignons, courge, miso, sauce soja, huile de sésame", "light": null, "months": [7, 8, 9]}, {"id": "r132", "name": "Patates, fromage et confiture", "cat": "vegetarien", "ing": "pommes de terre, fromage à raclette, confiture, beurre, sel, poivre", "light": false, "months": [0, 1, 2, 9, 10, 11]}, {"id": "r117", "name": "Pâtes orzo à la tomate", "cat": "pates-riz", "ing": "orzo, tomates concassées, ail, oignons, basilic, huile d'olive, parmesan, bouillon", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r126", "name": "Soupe miso", "cat": "soupe", "ing": "pâte de miso, dashi, tofu, algues wakame, oignons verts, champignons, sauce soja", "light": true, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r134", "name": "Émincé de poulet à la zurichoise", "cat": "volaille", "ing": "blancs de poulet, beurre à rôtir, échalote, champignons de Paris, pomme, vin blanc, crème entière, citron, sauce worcestershire, paprika, sel, poivre blanc", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r135", "name": "Potée de lard fumé et légumes", "cat": "viande-rouge", "ing": "lard fumé, poireau, carottes, chou rouge, pommes de terre, oignon, échalote, ail, laurier, thym, moutarde, vinaigre de cidre", "light": false, "months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}, {"id": "r136", "name": "Spaghetti aux brocolis", "cat": "pates-riz", "ing": "spaghetti, brocoli, oignon, crème, beurre, bouillon de légumes, piment vert, sel, poivre", "light": true, "months": [4, 5, 6, 7, 8, 9, 10]}, {"id": "r137", "name": "Salade César", "cat": "vegetarien", "ing": "laitue romaine, croûtons, parmesan, jaunes d'oeuf, anchois, ail, citron, huile d'olive, câpres, moutarde, sauce worcestershire, beurre", "light": true, "months": [5, 6, 7]}, {"id": "r138", "name": "Salade de riz", "cat": "poisson", "ing": "riz blanc, thon, maïs, tomates, oignon rouge, cornichons, mayonnaise, vinaigre de vin rouge, huile, sel, poivre", "light": true, "months": [5, 6, 7]}, {"id": "r139", "name": "Salade de tomates mozzarella", "cat": "vegetarien", "ing": "tomates, mozzarella, basilic frais, huile d'olive extra vierge, vinaigre balsamique, pignons, sel, poivre", "light": true, "months": [5, 6, 7]}, {"id": "r140", "name": "Taboulé", "cat": "vegetarien", "ing": "semoule de couscous, tomates, concombre, oignon nouveau, persil plat, coriandre fraîche, menthe, citron, huile d'olive, sel, poivre", "light": true, "months": [3, 4, 5, 6, 7, 8]}];
+
+let menus=JSON.parse(localStorage.getItem('mp_menus10')||'null')||DEFAULT_RECIPES;
+let exceptions=[];
+let plan={};
+let filterCat='all';
+
+function save(){localStorage.setItem('mp_menus10',JSON.stringify(menus));}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
+
+function showView(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  const labels={planner:'Planifier',menus:'Menus',courses:'Courses'};
+  document.querySelectorAll('.nav-tab').forEach(el=>{if(el.textContent.trim()===labels[v])el.classList.add('active');});
+}
+
+// ── THÈME SAISONNIER ──
+// Les quatre teintes reprennent le marli du logo, assombries pour que le texte
+// blanc des boutons reste lisible (contraste vérifié, 4,8 à 7,8 selon la saison).
+const SAISONS=[
+  {cle:'hiver',    nom:'Hiver',     mois:[11,0,1], accent:'#39576B', hover:'#355163', clair:'#E7EDF2', clairHover:'#D6E2EA'},
+  {cle:'printemps',nom:'Printemps', mois:[2,3,4],  accent:'#4A6B28', hover:'#3F5E22', clair:'#E9F0DF', clairHover:'#DCE8CC'},
+  {cle:'ete',      nom:'Été',       mois:[5,6,7],  accent:'#8A6410', hover:'#7E5A0E', clair:'#FAF1DA', clairHover:'#F2E4BE'},
+  {cle:'automne',  nom:'Automne',   mois:[8,9,10], accent:'#8B3A0F', hover:'#7E350D', clair:'#FAEFE7', clairHover:'#F4E0D2'}
+];
+function saisonDuMois(m){
+  if(m==null||isNaN(m))return null;
+  return SAISONS.find(s=>s.mois.includes(m))||null;
+}
+function appliquerTheme(){
+  const el=document.getElementById('start-date');
+  let m=el?monthForDate(el.value):null;
+  if(m==null)m=new Date().getMonth();
+  const s=saisonDuMois(m);
+  if(!s)return;
+  const r=document.documentElement.style;
+  r.setProperty('--accent',s.accent);
+  r.setProperty('--accent-hover',s.hover);
+  r.setProperty('--accent-light',s.clair);
+  r.setProperty('--accent-light-hover',s.clairHover);
+  const b=document.getElementById('saison-badge');
+  if(b){b.textContent=s.nom;b.style.background=s.clair;b.style.color=s.accent;}
+}
+
+// ── ACCOMPAGNEMENTS ──
+// Catalogue volontairement court. « months » absent signifie disponible toute l'année ;
+// les fenêtres reprennent le calendrier de saison utilisé pour les plats.
+const ACCOMP=[
+ {id:'a01',nom:'Pâtes',           type:'feculent',ing:'pâtes'},
+ {id:'a02',nom:'Riz',             type:'feculent',ing:'riz'},
+ {id:'a03',nom:'Pommes de terre', type:'feculent',ing:'pommes de terre'},
+ {id:'a04',nom:'Purée',           type:'feculent',ing:'pommes de terre, lait, beurre, muscade'},
+ {id:'a05',nom:'Frites au four',  type:'feculent',ing:'pommes de terre, huile d\'olive, paprika'},
+ {id:'a06',nom:'Rösti',           type:'feculent',ing:'pommes de terre, beurre'},
+ {id:'a07',nom:'Spätzli',         type:'feculent',ing:'spätzli, beurre'},
+ {id:'a08',nom:'Polenta',         type:'feculent',ing:'polenta, beurre, parmesan'},
+ {id:'a09',nom:'Semoule',         type:'feculent',ing:'semoule de couscous'},
+ {id:'a10',nom:'Pain',            type:'feculent',ing:'pain'},
+ {id:'a11',nom:'Salade verte',    type:'legume',  ing:'salade verte, huile d\'olive, vinaigre, moutarde'},
+ {id:'a12',nom:'Légumes vapeur',  type:'legume',  ing:'légumes de saison, beurre'},
+ {id:'a13',nom:'Carottes',        type:'legume',  ing:'carottes, beurre, persil'},
+ {id:'a14',nom:'Haricots verts',  type:'legume',  ing:'haricots verts, beurre, ail',      months:[5,6,7,8,9]},
+ {id:'a15',nom:'Brocoli',         type:'legume',  ing:'brocoli, beurre',                  months:[4,5,6,7,8,9,10]},
+ {id:'a16',nom:'Chou-fleur',      type:'legume',  ing:'chou-fleur, beurre, muscade',      months:[4,5,6,7,8,9,10]},
+ {id:'a17',nom:'Épinards',        type:'legume',  ing:'épinards, crème, muscade',         months:[2,3,4,5,6,7,8,9,10]},
+ {id:'a18',nom:'Courgettes',      type:'legume',  ing:'courgettes, huile d\'olive, ail',  months:[4,5,6,7,8,9]},
+ {id:'a19',nom:'Ratatouille',     type:'legume',  ing:'courgettes, aubergines, poivrons, tomates, oignons, huile d\'olive', months:[5,6,7,8]},
+ {id:'a20',nom:'Asperges',        type:'legume',  ing:'asperges, beurre',                 months:[3,4,5]},
+ {id:'a21',nom:'Champignons',     type:'legume',  ing:'champignons, beurre, persil, ail'},
+ {id:'a22',nom:'Petits pois',     type:'legume',  ing:'petits pois surgelés, beurre'},
+];
+function accompParId(id){return ACCOMP.find(a=>a.id===id)||null;}
+// Un plat qui contient déjà un féculent appelle un légume, et inversement.
+function platAFeculent(menu){
+  return (menu.ing||'').split(',').some(x=>x.trim()&&ingFam(x.trim())==='feculent');
+}
+function accompDisponibles(month){
+  return ACCOMP.filter(a=>!a.months||month==null||a.months.includes(month));
+}
+function accompCoherents(menu,month){
+  const dispo=accompDisponibles(month);
+  let garde;
+  if(menu.cat==='soupe')       garde=a=>a.id==='a10'||a.id==='a11';   // une soupe appelle du pain ou une salade
+  else if(platAFeculent(menu)) garde=a=>a.type==='legume';            // le plat porte déjà son féculent
+  else                         garde=a=>a.type==='feculent';
+  return {coherents:dispo.filter(garde), autres:dispo.filter(a=>!garde(a))};
+}
+// ── fenêtre de choix ──
+let accompCible={d:null,s:null};
+function openAccomp(d,s){
+  accompCible={d:d,s:s};
+  const slot=plan[`${d}-${s}`];
+  if(!slot||!slot.menuId)return;
+  const menu=menus.find(m=>m.id===slot.menuId);
+  const month=monthForDate(document.getElementById('start-date').value);
+  const {coherents,autres}=accompCoherents(menu,month);
+  const actuel=slot.accomp||null;
+  const puce=a=>`<button class="accomp-opt${actuel===a.id?' on':''}" onclick="choisirAccomp('${a.id}')">${a.nom}</button>`;
+  let h=`<div style="font-size:13px;color:var(--muted);margin-bottom:2px">${DAYS[d]} : ${s.charAt(0).toUpperCase()+s.slice(1)}</div>`;
+  h+=`<div style="font-weight:500;margin-bottom:10px">${menu.name}</div>`;
+  h+=`<div class="accomp-titre">Cohérents avec ce plat</div><div class="accomp-grille">${coherents.map(puce).join('')}</div>`;
+  h+=`<div class="accomp-titre" style="margin-top:12px">Autres</div><div class="accomp-grille">${autres.map(puce).join('')}</div>`;
+  h+=`<div style="margin-top:14px;display:flex;gap:8px"><button class="btn" onclick="choisirAccomp(null)">Aucun accompagnement</button><button class="btn" onclick="closeAccomp()">Fermer</button></div>`;
+  document.getElementById('accomp-contenu').innerHTML=h;
+  document.getElementById('accomp-overlay').style.display='flex';
+}
+function closeAccomp(){document.getElementById('accomp-overlay').style.display='none';}
+function choisirAccomp(id){
+  const k=`${accompCible.d}-${accompCible.s}`;
+  if(plan[k]){ if(id)plan[k].accomp=id; else delete plan[k].accomp; }
+  closeAccomp(); renderWeekGrid();
+}
+// ── ingrédients d'un créneau, plat et accompagnement réunis ──
+function ingredientsDuCreneau(slot){
+  const out=[];
+  if(!slot||slot.absent||slot.restes||!slot.menuId)return out;
+  const menu=menus.find(m=>m.id===slot.menuId);
+  if(menu&&menu.ing)out.push(...menu.ing.split(',').map(x=>x.trim()).filter(Boolean));
+  const a=slot.accomp?accompParId(slot.accomp):null;
+  if(a&&a.ing)out.push(...a.ing.split(',').map(x=>x.trim()).filter(Boolean));
+  return out;
+}
+
+// ── DATE ──
+(function(){
+  const today=new Date();const day=today.getDay();
+  const diff=(4-day+7)%7;const next=new Date(today);
+  next.setDate(today.getDate()+(diff===0?0:diff));
+  document.getElementById('start-date').value=next.toISOString().split('T')[0];
+  appliquerTheme();
+})();
+
+// ── EXCEPTIONS ──
+function addException(){
+  const day=parseInt(document.getElementById('exc-day').value);
+  const moment=document.getElementById('exc-moment').value;
+  const reason=document.getElementById('exc-reason').value.trim()||'Absent';
+  if(moment==='both'){exceptions.push({day,slot:'midi',reason});exceptions.push({day,slot:'soir',reason});}
+  else exceptions.push({day,slot:moment,reason});
+  document.getElementById('exc-reason').value='';
+  renderExceptions();
+}
+function renderExceptions(){
+  const el=document.getElementById('exception-list');
+  if(!exceptions.length){el.innerHTML='<span style="font-size:13px;color:var(--muted)">Aucune exception</span>';return;}
+  el.innerHTML=exceptions.map((e,i)=>`<div class="exception-tag"><span>${DAYS[e.day]} ${e.slot} : ${e.reason}</span><button onclick="removeException(${i})">✕</button></div>`).join('');
+}
+function removeException(i){exceptions.splice(i,1);renderExceptions();}
+renderExceptions();
+
+// ── GENERATION ──
+function isException(d,s){return exceptions.some(e=>e.day===d&&e.slot===s);}
+function getExcReason(d,s){const e=exceptions.find(e=>e.day===d&&e.slot===s);return e?e.reason:'';}
+
+// Saison courante d'après la date de début (hémisphère nord)
+function monthForDate(startStr){
+  if(!startStr)return null;
+  const d=new Date(startStr+'T00:00:00');
+  return isNaN(d)?null:d.getMonth();
+}
+function inSeason(m,month){
+  if(month==null||!Array.isArray(m.months))return true;
+  return m.months.includes(month);
+}
+function isTypique(m,month){
+  return month!=null&&Array.isArray(m.months)&&m.months.length<12&&m.months.includes(month);
+}
+
+// Ingrédients périssables : mutualiser les achats sur la semaine
+const PERISH=['basilic','coriandre','menthe','persil','aneth','ciboulette','ciboule','estragon','sauge',
+ 'courgette','aubergine','poivron','épinard','blette','asperge','concombre','avocat','tomates cœur','tomates cerises','champignons','haricots verts',
+ 'crème','mascarpone','ricotta','feta','reblochon','mozzarella',
+ 'lait de coco','citronnelle','gingembre','citron vert',
+ 'saumon','crevettes','calamars','lotte','flétan','moules'];
+function perishablesOf(m){
+  const ing=(m.ing||'').toLowerCase();const set=new Set();
+  for(const p of PERISH){if(ing.includes(p))set.add(p);}
+  return set;
+}
+
+// Profils de plat : éviter deux plats trop semblables rapprochés
+function profilesOf(m){
+  const t=((m.name||'')+' '+(m.ing||'')).toLowerCase();const p=new Set();
+  if(/lait de coco/.test(t)&&/curry|massaman|pâte de curry|garam|cinq-épices/.test(t))p.add('coco-curry');
+  if(/friture|tempura|pann?é|crousti|korokke|beignet|frit/.test(t))p.add('friture');
+  if(/béchamel|gratin|gruyère râpé/.test(t))p.add('gratin');
+  if(/raclette|reblochon|fondue|tartiflette|croûte au fromage|à fondue/.test(t))p.add('fromage-fondu');
+  if(/sauce soja|mirin|saké|sake|hoisin|teriyaki|sauce huître/.test(t))p.add('asiatique');
+  if(/\bbowl\b|rouleau|salade|tartare/.test(t))p.add('cru-froid');
+  if(/risotto/.test(t))p.add('risotto');
+  return p;
+}
+function shareCount(a,b){let n=0;for(const x of a)if(b.has(x))n++;return n;}
+
+// Filtres durs puis score (saison, mutualisation, alternance fine)
+function pickMenu(recentIds,excludeCat,preferLight,opts){
+  if(!menus.length)return null;
+  opts=opts||{};
+  let pool=menus.filter(m=>!recentIds.includes(m.id));
+  if(!pool.length)pool=[...menus];
+  if(excludeCat){const f=pool.filter(m=>m.cat!==excludeCat);if(f.length)pool=f;}
+  if(preferLight===true){const f=pool.filter(m=>m.light!==false);if(f.length)pool=f;}
+  else if(preferLight===false){const f=pool.filter(m=>m.light!==true);if(f.length)pool=f;}
+  if(opts.month!=null){const f=pool.filter(m=>inSeason(m,opts.month));if(f.length>=3)pool=f;}
+  // Éviter la même catégorie que le même créneau de la veille (soir après soir, midi après midi)
+  if(opts.avoidCatVeille){const f=pool.filter(m=>m.cat!==opts.avoidCatVeille);if(f.length>=3)pool=f;}
+  const usedP=opts.usedPerish||new Set();
+  const recentProf=opts.recentProfiles||[];
+  // Alternance des profils : filtre dur tant qu'il reste assez de choix
+  const lastProf=recentProf.length?recentProf[recentProf.length-1]:null;
+  if(lastProf&&lastProf.size){
+    const f=pool.filter(m=>shareCount(profilesOf(m),lastProf)===0);
+    if(f.length>=3)pool=f;
+  }
+  const scored=pool.map(m=>{
+    let sc=Math.random()*2.0;
+    sc+=Math.min(shareCount(perishablesOf(m),usedP),2)*1.2;
+    const prof=profilesOf(m);
+    for(const rp of recentProf){sc-=shareCount(prof,rp)*1.6;}
+    if(isTypique(m,opts.month))sc+=0.4;
+    // Rééquilibrage : pénalise une catégorie déjà bien représentée dans la semaine
+    if(opts.catCounts)sc-=(opts.catCounts[m.cat]||0)*0.55;
+    return {m,sc};
+  });
+  scored.sort((a,b)=>b.sc-a.sc);
+  // Tirage pondéré parmi les meilleurs : garde les préférences sans figer les mêmes plats
+  const top=scored.slice(0,Math.max(3,Math.min(18,scored.length)));
+  const base=top[top.length-1].sc;
+  const weights=top.map(x=>Math.exp((x.sc-base)*0.55)+0.45);
+  const tot=weights.reduce((a,b)=>a+b,0);
+  let t=Math.random()*tot;
+  for(let i=0;i<top.length;i++){t-=weights[i];if(t<=0)return top[i].m;}
+  return top[0].m;
+}
+
+function generatePlan(){
+  if(!menus.length){toast('Ajoutez d\'abord des menus !');return;}
+  plan={};const recent=[];const recentProfiles=[];let usedPerish=new Set();const perishQueue=[];
+  const catCounts={};const lastCatBySlot={};
+  const month=monthForDate(document.getElementById('start-date').value);
+  for(let d=0;d<8;d++){
+    for(let s of SLOTS){
+      const key=`${d}-${s}`;
+      if(isException(d,s)){plan[key]={absent:true,reason:getExcReason(d,s)};continue;}
+      const lastCat=recent.length?menus.find(m=>m.id===recent[recent.length-1])?.cat:null;
+      const preferLight=s==='soir'?true:null;
+      const m=pickMenu(recent,lastCat,preferLight,{month,usedPerish,recentProfiles:recentProfiles.slice(-2),catCounts,avoidCatVeille:lastCatBySlot[s]});
+      if(m){
+        plan[key]={menuId:m.id};
+        recent.push(m.id);
+        catCounts[m.cat]=(catCounts[m.cat]||0)+1;lastCatBySlot[s]=m.cat;
+        recentProfiles.push(profilesOf(m));
+        perishQueue.push(perishablesOf(m));if(perishQueue.length>3)perishQueue.shift();
+        usedPerish=new Set();perishQueue.forEach(set=>set.forEach(x=>usedPerish.add(x)));
+      }
+    }
+  }
+  renderWeekGrid();toast('Plan généré : saison, léger le soir et anti-gaspi pris en compte');
+}
+
+function toggleRestes(d,s){
+  const key=`${d}-${s}`;
+  if(plan[key]?.restes){
+    const prevKey=s==='soir'?`${d}-midi`:d>0?`${d-1}-soir`:null;
+    const prevCat=prevKey&&plan[prevKey]?.menuId?menus.find(m=>m.id===plan[prevKey].menuId)?.cat:null;
+    const month=monthForDate(document.getElementById('start-date').value);
+    const usedIds=Object.entries(plan).filter(([k,v])=>k!==key&&v.menuId).map(([k,v])=>v.menuId);
+    const m=pickMenu(usedIds,prevCat,s==='soir'?true:null,{month});
+    if(m)plan[key]={menuId:m.id};
+  } else {
+    plan[key]={restes:true};
+  }
+  renderWeekGrid();
+}
+
+function refreshSlot(d,s){
+  const key=`${d}-${s}`;
+  const cur=plan[key]?.menuId;
+  const recentIds=Object.entries(plan).filter(([k,v])=>k!==key&&v.menuId).map(([k,v])=>v.menuId);
+  const prevKey=s==='soir'?`${d}-midi`:d>0?`${d-1}-soir`:null;
+  const prevCat=prevKey&&plan[prevKey]?.menuId?menus.find(m=>m.id===plan[prevKey].menuId)?.cat:null;
+  const preferLight=s==='soir'?true:null;
+  const month=monthForDate(document.getElementById('start-date').value);
+  const neighborIds=[];
+  if(prevKey&&plan[prevKey]?.menuId)neighborIds.push(plan[prevKey].menuId);
+  const usedPerish=new Set();neighborIds.forEach(id=>{const mm=menus.find(x=>x.id===id);if(mm)perishablesOf(mm).forEach(x=>usedPerish.add(x));});
+  const recentProfiles=neighborIds.map(id=>{const mm=menus.find(x=>x.id===id);return mm?profilesOf(mm):new Set();});
+  const catCounts={};Object.entries(plan).forEach(([k,v])=>{if(k!==key&&v.menuId){const mm=menus.find(x=>x.id===v.menuId);if(mm)catCounts[mm.cat]=(catCounts[mm.cat]||0)+1;}});
+  const veilleKey=d>0?`${d-1}-${s}`:null;
+  const avoidCatVeille=veilleKey&&plan[veilleKey]?.menuId?menus.find(x=>x.id===plan[veilleKey].menuId)?.cat:null;
+  const m=pickMenu(cur?[...recentIds,cur]:recentIds,prevCat,preferLight,{month,usedPerish,recentProfiles,catCounts,avoidCatVeille});
+  if(m){plan[key]={menuId:m.id};renderWeekGrid();toast('Nouveau menu proposé');}
+  else toast('Aucun autre menu disponible');
+}
+
+function clearPlan(){plan={};renderWeekGrid();}
+
+function getDateForDay(startStr,idx){
+  if(!startStr)return'';
+  const d=new Date(startStr+'T00:00:00');d.setDate(d.getDate()+idx);
+  return d.toLocaleDateString('fr-CH',{day:'numeric',month:'short'});
+}
+
+function renderWeekGrid(){
+  const startStr=document.getElementById('start-date').value;
+  const container=document.getElementById('week-grid-container');
+  if(!Object.keys(plan).length){
+    container.innerHTML='<div class="empty-state"><div class="empty-state-icon">📅</div><div>Configurez et générez votre plan</div></div>';return;
+  }
+  let html='<div class="week-grid">';
+  html+='<div class="grid-header">Jour</div><div class="grid-header">Midi</div><div class="grid-header">Soir</div>';
+  for(let d=0;d<8;d++){
+    const date=getDateForDay(startStr,d);
+    html+=`<div class="grid-day-label"><div><div class="grid-day-name"><span class="d-long">${DAYS[d]}</span><span class="d-court">${DAYS[d].slice(0,3)}</span></div>${date?`<div class="grid-day-date">${date}</div>`:''}</div></div>`;
+    for(let s of SLOTS){
+      const key=`${d}-${s}`;const slot=plan[key];
+      if(!slot){html+=`<div class="grid-cell"><div class="empty-slot" style="flex-direction:column;gap:6px">·<button class="btn btn-sm" title="Choisir un menu" onclick="openModal(${d},'${s}')" style="font-size:12px;background:var(--surface2)">☰<span class="lbl"> Choisir</span></button></div></div>`;}
+      else if(slot.absent){html+=`<div class="grid-cell absent"><div class="absent-label"><div class="absent-icon">✕</div>${slot.reason}</div></div>`;}
+      else if(slot.restes){html+=`<div class="grid-cell restes"><div class="restes-label"><span class="restes-icon">♻</span> Restes</div><div class="slot-actions"><button class="btn btn-restes" onclick="toggleRestes(${d},'${s}')">✕ Annuler</button></div></div>`;}
+      else{
+        const menu=menus.find(m=>m.id===slot.menuId);
+        if(!menu){html+=`<div class="grid-cell"><div class="empty-slot">·</div></div>`;}
+        else{const lightBadge=menu.light===true?'<span class="badge-light">léger</span>':menu.light===false?'<span class="badge-heavy">copieux</span>':'';
+html+=`<div class="grid-cell"><div class="slot-menu-name">${menu.name} ${lightBadge}</div><div class="slot-meta"><span class="cat-badge cat-${menu.cat}">${CAT_LABELS[menu.cat]}</span>${(()=>{const a=slot.accomp?accompParId(slot.accomp):null;return a?`<button class="accomp-btn rempli" title="Changer l'accompagnement" onclick="openAccomp(${d},'${s}')">+ ${a.nom}</button>`:`<button class="accomp-btn" title="Ajouter un accompagnement" onclick="openAccomp(${d},'${s}')">+</button>`;})()}</div><div class="slot-actions"><button class="btn btn-refresh" title="Proposer un autre menu" onclick="refreshSlot(${d},'${s}')">↺<span class="lbl"> Autre</span></button><button class="btn btn-sm" title="Choisir un menu" onclick="openModal(${d},'${s}')" style="background:var(--surface2);border-color:var(--border)">☰<span class="lbl"> Choisir</span></button><button class="btn btn-restes" title="Marquer comme restes" onclick="toggleRestes(${d},'${s}')">♻<span class="lbl"> Restes</span></button></div></div>`;}
+      }
+    }
+  }
+  html+='</div>';container.innerHTML=html;
+}
+renderWeekGrid();
+
+// ── MENUS ──
+function setFilter(cat){
+  filterCat=cat;
+  document.querySelectorAll('.filter-chip').forEach(el=>{el.classList.toggle('active',el.dataset.cat===cat);});
+  renderMenus();
+}
+
+function addMenu(){
+  const name=document.getElementById('new-name').value.trim();
+  const cat=document.getElementById('new-cat').value;
+  const ing=document.getElementById('new-ing').value.trim();
+  if(!name){toast('Nom requis');return;}
+  menus.push({id:'u'+Date.now(),name,cat,ing});save();
+  document.getElementById('new-name').value='';document.getElementById('new-ing').value='';
+  renderMenus();toast('Menu ajouté !');
+}
+
+function deleteMenu(id){
+  if(!confirm('Supprimer ce menu ?'))return;
+  menus=menus.filter(m=>m.id!==id);save();renderMenus();toast('Supprimé');
+}
+
+function editIngredients(id){
+  const m=menus.find(x=>x.id===id);if(!m)return;
+  const newIng=prompt(`Ingrédients pour "${m.name}" :`,m.ing||'');
+  if(newIng===null)return;
+  m.ing=newIng.trim();save();renderMenus();toast('Ingrédients mis à jour');
+}
+
+function renderMenus(){
+  const q=(document.getElementById('search-menu').value||'').toLowerCase();
+  document.getElementById('menu-count').textContent=menus.length;
+  const container=document.getElementById('menu-list-container');
+  let filtered=menus;
+  if(filterCat!=='all')filtered=filtered.filter(m=>m.cat===filterCat);
+  if(q)filtered=filtered.filter(m=>m.name.toLowerCase().includes(q)||(m.ing&&m.ing.toLowerCase().includes(q)));
+  if(!filtered.length){container.innerHTML='<div class="empty-state"><div class="empty-state-icon">🍽</div><div>Aucun menu trouvé</div></div>';return;}
+
+  const groups={};
+  for(const cat of Object.keys(CAT_LABELS)){
+    const items=filtered.filter(m=>m.cat===cat);
+    if(items.length)groups[cat]=items;
+  }
+  let html='';
+  for(const[cat,items]of Object.entries(groups)){
+    html+=`<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="cat-badge cat-${cat}">${CAT_LABELS[cat]}</span><span class="count-badge">${items.length}</span></div><div class="menu-list">`;
+    for(const m of items){
+      const missingIng=!m.ing;
+      html+=`<div class="menu-item${missingIng?' missing-ing':''}">
+        <span class="menu-item-name">${m.name}${missingIng?'<span style="font-size:11px;color:#B86800;margin-left:6px">⚠ ingrédients manquants</span>':''}</span>
+        <span class="menu-item-ing" title="${m.ing||''}">${m.ing||'·'}</span>
+        <button class="btn btn-sm" onclick="editIngredients('${m.id}')" title="Modifier les ingrédients">✏</button>
+        <button class="btn btn-danger" onclick="deleteMenu('${m.id}')">✕</button>
+      </div>`;
+    }
+    html+='</div></div>';
+  }
+  container.innerHTML=html;
+}
+renderMenus();
+
+// ── COURSES ──
+function normalizeIng(s){
+  let n=s.toLowerCase().trim();
+  n=n.replace(/\s*\(.*?\)/g,'').trim();
+  if(n.length>3){
+    if(n.endsWith('eaux')) n=n.slice(0,-4)+'eau';
+    else if(n.endsWith('aux')) n=n.slice(0,-2)+'al';
+    else if(n.endsWith('ttes')) n=n.slice(0,-1);
+    else if(n.endsWith('ons')&&n.length>5) n=n.slice(0,-1);
+    else if(n.endsWith('es')&&n.length>4) n=n.slice(0,-1);
+    else if(n.endsWith('s')&&n.length>4) n=n.slice(0,-1);
+  }
+  return n;
+}
+
+// ── LISTE DE COURSES : état du filtre et des articles cochés ──
+let coursesAll=[];
+let coursesFamsOn=new Set();
+let coursesChecked=new Set();
+
+function famsPresent(){
+  const s=new Set();
+  for(const ing of coursesAll) s.add(ingFam(ing));
+  return FAM_ORDER.filter(f=>s.has(f));
+}
+function visibleCourses(){
+  return coursesAll.filter(ing=>coursesFamsOn.has(ingFam(ing)));
+}
+function toggleFam(f){
+  if(coursesFamsOn.has(f))coursesFamsOn.delete(f);else coursesFamsOn.add(f);
+  renderCourses();
+}
+function setAllFams(){
+  coursesFamsOn=new Set(famsPresent());
+  renderCourses();
+}
+function toggleCheck(el,idx){
+  if(coursesChecked.has(idx)){coursesChecked.delete(idx);el.closest('.ing-card').classList.remove('done');}
+  else{coursesChecked.add(idx);el.closest('.ing-card').classList.add('done');}
+}
+
+function renderCourses(){
+  const container=document.getElementById('courses-container');
+  const present=famsPresent();
+  const counts={};
+  coursesAll.forEach(ing=>{const f=ingFam(ing);counts[f]=(counts[f]||0)+1;});
+  const vis=visibleCourses();
+  const filtre=coursesFamsOn.size!==present.length;
+  let html=`<div style="margin-bottom:.75rem;font-size:13px;color:var(--muted)">`
+    +`${vis.length} article${vis.length>1?'s':''} affiché${vis.length>1?'s':''}`
+    +(filtre?` sur ${coursesAll.length}`:'')
+    +` · ordre alphabétique · cliquez une famille pour la filtrer</div>`;
+  html+='<div class="fam-legend">';
+  const allOn=coursesFamsOn.size===present.length;
+  html+=`<span class="fam-chip${allOn?'':' off'}" style="background:var(--accent-light);color:var(--accent)" onclick="setAllFams()">Tous <span class="fam-count">${coursesAll.length}</span></span>`;
+  for(const f of present){
+    const d=ING_FAM[f];const on=coursesFamsOn.has(f);
+    html+=`<span class="fam-chip${on?'':' off'}" style="background:${d.bg};color:${d.color}" onclick="toggleFam('${f}')">`
+      +`<span class="fam-dot" style="background:${d.color}"></span>${d.label} <span class="fam-count">${counts[f]}</span></span>`;
+  }
+  html+='</div>';
+  if(!vis.length){
+    html+='<div class="empty-state"><div>Aucune famille sélectionnée : cliquez « Tous » pour tout réafficher</div></div>';
+  } else {
+    html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;">';
+    for(const ing of vis){
+      const idx=coursesAll.indexOf(ing);
+      const d=ING_FAM[ingFam(ing)];
+      const done=coursesChecked.has(idx);
+      html+=`<div class="ing-card${done?' done':''}" style="background:${d.bg};border-left-color:${d.color};color:${d.color}" title="${d.label}">`
+        +`<input type="checkbox" ${done?'checked':''} style="accent-color:${d.color}" onchange="toggleCheck(this,${idx})" /><span>${ing}</span></div>`;
+    }
+    html+='</div>';
+  }
+  container.innerHTML=html;
+}
+
+function generateCourses(){
+  const container=document.getElementById('courses-container');
+  if(!Object.keys(plan).length){toast('Générez d\'abord un plan');showView('planner');return;}
+  const seen={};
+  for(const slot of Object.values(plan)){
+    if(slot.absent||slot.restes||!slot.menuId)continue;
+    for(const ing of ingredientsDuCreneau(slot)){
+      const key=normalizeIng(ing);
+      if(!seen[key]) seen[key]=ing.charAt(0).toUpperCase()+ing.slice(1).toLowerCase();
+    }
+  }
+  coursesAll=Object.values(seen).sort((a,b)=>a.localeCompare(b,'fr'));
+  coursesChecked=new Set();
+  if(!coursesAll.length){container.innerHTML='<div class="empty-state"><div>Aucun ingrédient trouvé : vérifiez les ingrédients des menus</div></div>';return;}
+  coursesFamsOn=new Set(famsPresent());
+  renderCourses();
+  document.getElementById('btn-export').style.display='inline-flex';
+  toast('Liste générée !');
+}
+
+// ── EXPORT PDF ──
+function exportPDF(){
+  // Build print-plan
+  const startStr=document.getElementById('start-date').value;
+  let ph='<h2>Menu de la semaine</h2>';
+  if(startStr){
+    const d0=new Date(startStr+'T00:00:00');
+    const d1=new Date(d0);d1.setDate(d0.getDate()+7);
+    const fmt=d=>d.toLocaleDateString('fr-CH',{day:'numeric',month:'long',year:'numeric'});
+    ph+=`<div class="print-sub">Du ${fmt(d0)} au ${fmt(d1)}</div>`;
+  }
+  ph+='<table class="print-week"><thead><tr><th>Jour</th><th>Midi</th><th>Soir</th></tr></thead><tbody>';
+  for(let d=0;d<8;d++){
+    const date=getDateForDay(startStr,d);
+    ph+=`<tr><td class="day-label">${DAYS[d]}<br><span style="font-weight:400;font-size:10px;color:#888">${date}</span></td>`;
+    for(const s of SLOTS){
+      const key=`${d}-${s}`;const slot=plan[key];
+      if(!slot) ph+='<td>·</td>';
+      else if(slot.absent) ph+=`<td class="absent-cell">✕ ${slot.reason}</td>`;
+      else if(slot.restes) ph+='<td class="restes-cell">♻ Restes</td>';
+      else{
+        const menu=menus.find(m=>m.id===slot.menuId);
+        const ac=slot.accomp?accompParId(slot.accomp):null;
+        ph+=menu?`<td><strong>${menu.name}</strong>${ac?` <span style="font-weight:400">+ ${ac.nom}</span>`:''}<div class="print-cat">${CAT_LABELS[menu.cat]}</div></td>`:'<td>·</td>';
+      }
+    }
+    ph+='</tr>';
+  }
+  ph+='</tbody></table>';
+  document.getElementById('print-plan').innerHTML=ph;
+
+  // Build print-courses
+  const seen={};
+  for(const slot of Object.values(plan)){
+    if(slot.absent||slot.restes||!slot.menuId)continue;
+    for(const ing of ingredientsDuCreneau(slot)){
+      const key=normalizeIng(ing);
+      if(!seen[key]) seen[key]=ing.charAt(0).toUpperCase()+ing.slice(1).toLowerCase();
+    }
+  }
+  let allIngs=Object.values(seen).sort((a,b)=>a.localeCompare(b,'fr'));
+  if(coursesAll.length) allIngs=visibleCourses();
+  const filtreActif=coursesAll.length&&allIngs.length!==coursesAll.length;
+  let ch=`<h2>Liste de courses</h2><div class="print-sub">${allIngs.length} ingrédient${allIngs.length>1?'s':''}${filtreActif?' (sélection filtrée)':''}</div>`;
+  const pf={};
+  for(const ing of allIngs){const f=ingFam(ing);(pf[f]=pf[f]||[]).push(ing);}
+  ch+='<div class="print-legend">';
+  for(const f of FAM_ORDER){ if(!pf[f])continue; const d=ING_FAM[f];
+    ch+=`<span><span class="k" style="background:${d.color}"></span>${d.label}</span>`; }
+  ch+='</div>';
+  ch+='<div class="print-ing-grid">';
+  for(const ing of allIngs){
+    const d=ING_FAM[ingFam(ing)];
+    ch+=`<div class="print-ing-item" style="border-left-color:${d.color}"><span class="print-ing-check"></span><span>${ing}</span></div>`;
+  }
+  ch+='</div>';
+  document.getElementById('print-courses').innerHTML=ch;
+
+  window.print();
+}
+
+// ── MODAL PICKER ──
+let modalTarget={d:null,s:null};
+let modalCatFilter='all';
+
+function openModal(d,s){
+  modalTarget={d,s};
+  modalCatFilter='all';
+  const label=`${DAYS[d]} : ${s.charAt(0).toUpperCase()+s.slice(1)}`;
+  document.getElementById('modal-slot-label').textContent=label;
+  document.getElementById('modal-search').value='';
+  // Build filter chips
+  const fr=document.getElementById('modal-filter-row');
+  const cats=['all',...Object.keys(CAT_LABELS)];
+  fr.innerHTML=cats.map(c=>`<button class="filter-chip${c==='all'?' active':''}" data-cat="${c}" onclick="setModalFilter('${c}')">${c==='all'?'Tous':CAT_LABELS[c]}</button>`).join('');
+  renderModalList();
+  const ov=document.getElementById('modal-overlay');
+  ov.style.display='flex';
+  document.getElementById('modal-search').focus();
+}
+
+function closeModal(){document.getElementById('modal-overlay').style.display='none';}
+
+function setModalFilter(cat){
+  modalCatFilter=cat;
+  document.querySelectorAll('#modal-filter-row .filter-chip').forEach(el=>el.classList.toggle('active',el.dataset.cat===cat));
+  renderModalList();
+}
+
+function renderModalList(){
+  const q=(document.getElementById('modal-search').value||'').toLowerCase();
+  let pool=menus;
+  if(modalCatFilter!=='all') pool=pool.filter(m=>m.cat===modalCatFilter);
+  if(q) pool=pool.filter(m=>m.name.toLowerCase().includes(q)||(m.ing&&m.ing.toLowerCase().includes(q)));
+  const list=document.getElementById('modal-list');
+  if(!pool.length){list.innerHTML='<div style="text-align:center;padding:1.5rem;color:var(--muted)">Aucun menu trouvé</div>';return;}
+  list.innerHTML=pool.map(m=>`
+    <div class="modal-item" onclick="selectMenuFromModal('${m.id}')">
+      <div>
+        <div class="modal-item-name">${m.name}</div>
+        <span class="cat-badge cat-${m.cat}" style="font-size:10px">${CAT_LABELS[m.cat]}</span>
+        ${m.light===true?'<span class="badge-light">léger</span>':m.light===false?'<span class="badge-heavy">copieux</span>':''}
+      </div>
+      <span class="modal-item-ing">${m.ing||''}</span>
+    </div>`).join('');
+}
+
+function selectMenuFromModal(menuId){
+  const {d,s}=modalTarget;
+  plan[`${d}-${s}`]={menuId};
+  renderWeekGrid();
+  closeModal();
+  toast('Menu sélectionné');
+}
+
+// Close on overlay click
+document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('accomp-overlay').addEventListener('click',function(e){if(e.target===this)closeAccomp();});
+
+</script>
+</body>
+</html>
